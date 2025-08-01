@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrinho | DesignFej</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>DesignFej</h1>
+    </header>
+
+    <section class="carrinho">
+      <h2>Meu carrinho</h2>
+      <div class="produto-carrinho">
+        <img src="Kit Aliancas.png" alt="Kit Alianças" class="imagem-produto" />
+
+        <div class="detalhes-produto">
+          <h3 class="nome-produto">Kit Alianças</h3>
+          <p>Anel - Tamanho Aro: _____</p>
+          <p>Aliança - Tamanho Aro 1: _____</p>
+          <p>Aliança - Gravação Aro 1: _____</p>
+          <p>Aliança - Tamanho Aro 2: _____</p>
+          <p>Aliança - Gravação Aro 2: _____</p>
+        </div>
+
+        <div class="preco-quantidade">
+          <p class="preco">R$ 3.062,87</p>
+          <p class="pix">ou R$ 3.062,87 à vista no pix</p>
+          <div class="quantidade">
+            <button>-</button>
+            <input type="text" value="1" readonly />
+            <button>+</button>
+          </div>
+        </div>
+
+        <div class="resumo">
+          <p>Subtotal: <strong>R$ 3.062,87</strong></p>
+          <label for="cupom">Cupom:</label>
+          <input type="text" placeholder="Opcional" id="cupom" />
+
+          <label for="frete">Frete:</label>
+          <input type="text" placeholder="Cep" id="frete" />
+
+          <p>Total: <strong>R$ 3.062,87</strong></p>
+          <small>10x de R$ 306,28 sem juros</small>
+
+          <div class="botoes">
+            <button class="finalizar">Finalizar compra</button>
+            <button class="continuar">Continuar comprando</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="esgotado">
+      <img src="Kit Aliancas.png" alt="Kit Alianças" class="imagem-produto" />
+      <div class="info-esgotado">
+        <h3 class="nome-produto">Kit Alianças</h3>
+        <div class="mensagem-esgotado">
+          <p>Produto esgotado!</p>
+          <label>
+            <input type="checkbox" />
+            Deseja ser notificado quando o estoque for reposto?
+          </label>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
