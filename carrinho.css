@@ -1,70 +1,143 @@
-
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Georgia", serif;
   margin: 0;
-  padding: 0;
   background-color: #fff;
   color: #333;
 }
 
 header {
   text-align: center;
-  padding: 30px 0;
-  font-size: 32px;
-  font-weight: bold;
-  font-family: 'Georgia', serif;
+  padding: 40px 0 10px;
+  font-size: 2em;
+  letter-spacing: 0.3em;
 }
 
 .carrinho {
-  max-width: 800px;
+  background-color: #e4b4b4;
+  padding: 40px;
   margin: 0 auto;
-  border: 1px solid #ccc;
-  padding: 20px;
+  max-width: 1700px;
+  border: 1px solid;
 }
 
-.produto {
+.carrinho h2 {
+  text-align: center;
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+.produto-carrinho {
   display: flex;
-  margin-bottom: 20px;
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #aaa;
+  align-items: flex-start;
   gap: 20px;
 }
 
-.produto img {
+.imagem-produto {
   width: 150px;
   height: auto;
-  object-fit: cover;
+  border-radius: 4px;
 }
 
-.detalhes {
-  flex-grow: 1;
+.detalhes-produto {
+  background: #f2c5c5;
+  padding: 15px;
+  flex: 1;
+  font-size: 14px;
 }
 
-.detalhes input {
-  width: 100%;
-  padding: 5px;
-  margin: 5px 0;
+.nome-produto {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.preco-quantidade {
+  text-align: center;
+  min-width: 150px;
+}
+
+.preco {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.pix {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.quantidade {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.quantidade button {
+  width: 25px;
+  height: 25px;
+}
+
+.quantidade input {
+  width: 30px;
+  text-align: center;
 }
 
 .resumo {
-  text-align: right;
-  margin-top: 20px;
+  border-left: 1px solid #aaa;
+  padding-left: 20px;
+  min-width: 200px;
+}
+
+.resumo p,
+.resumo label {
+  margin: 10px 0;
+}
+
+.resumo input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 .botoes {
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
   margin-top: 20px;
+  justify-content: space-evenly;
 }
 
-button {
-  padding: 10px 20px;
-  background-color: #b67c7c;
+.finalizar {
+  background-color: #cc7b7b;
   border: none;
-  color: white;
+  padding: 8px 15px;
   cursor: pointer;
-  border-radius: 5px;
+  color: white;
 }
 
-button:hover {
-  background-color: #a06c6c;
+.continuar {
+  border: 1px solid #cc7b7b;
+  background: white;
+  padding: 8px 15px;
+  cursor: pointer;
+  color: #cc7b7b;
+}
+
+.esgotado {
+  display: flex;
+  margin: 40px 120px;
+  align-items: center;
+}
+
+.info-esgotado {
+  background-color: #f2c5c5;
+  padding: 20px;
+  margin-left: 20px;
+}
+
+.mensagem-esgotado p {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
 }
