@@ -6,6 +6,7 @@
     <title>DesignFej Joias</title>
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="./script/script.js"></script>
 </head>
 <body>
 
@@ -61,36 +62,5 @@
         <p>Brincos</p>
         <p>@designfejomijoia</p>
     </footer>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const menuIcon = document.querySelector('.menu-icon');
-        const menuLateral = document.querySelector('.menu-lateral');
-      
-        const closeMenuIcon = document.querySelector('.close-menu-icon');
-
-    
-        menuIcon.addEventListener('click', function(event) {
-            event.stopPropagation(); 
-            menuLateral.classList.toggle('open');
-        });
-
-       
-        if (closeMenuIcon) {
-            closeMenuIcon.addEventListener('click', function(event) {
-                event.stopPropagation(); 
-                menuLateral.classList.remove('open');
-            });
-        }
-
-       
-        document.addEventListener('click', function(event) {
-           
-            if (!menuLateral.contains(event.target) && menuLateral.classList.contains('open')) {
-                menuLateral.classList.remove('open');
-            }
-        });
-    });
-</script>
 </body>
 </html>
