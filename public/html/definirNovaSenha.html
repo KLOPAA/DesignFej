@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Definir Nova Senha</title>
+  <link rel="stylesheet" href="/css/redefinirSenha.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="container">
+    <form id="formNovaSenha">
+      <h2>Definir Nova Senha</h2>
+      <p>Digite sua nova senha:</p><br>
+      
+      <input type="password" id="novaSenha" placeholder="Nova senha" required>
+      <input type="password" id="confirmarSenha" placeholder="Confirmar nova senha" required>
+      
+      <button type="submit">Alterar Senha</button>
+      <button type="button" onclick="window.location.href='login.html'">Cancelar</button>
+      
+      <div id="errorMessage" style="display: none; color: red; margin-top: 10px;"></div>
+      <div id="successMessage" style="display: none; color: green; margin-top: 10px;"></div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('formNovaSenha').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const novaSenha = document.getElementById('novaSenha').value;
+      const confirmarSenha = document.getElementById('confirmarSenha').value;
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+      const token = localStorage.getItem('resetToken');
+
+      // Limpar mensagens
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      if (!novaSenha || !confirmarSenha) {
+        errorMessage.innerText = 'Por favor, preencha todos os campos';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      if (novaSenha !== confirmarSenha) {
+        errorMessage.innerText = 'As senhas não coincidem';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      if (novaSenha.length < 6) {
+        errorMessage.innerText = 'A senha deve ter pelo menos 6 caracteres';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/redefinir/nova-senha', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            token: token,
+            novaSenha: novaSenha 
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.sucesso) {
+          localStorage.removeItem('resetToken');
+          successMessage.innerText = 'Senha alterada com sucesso!';
+          successMessage.style.display = 'block';
+          
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 2000);
+        } else {
+          errorMessage.innerText = data.mensagem || 'Erro ao alterar senha';
+          errorMessage.style.display = 'block';
+        }
+      } catch (error) {
+        errorMessage.innerText = 'Erro de conexão. Tente novamente.';
+        errorMessage.style.display = 'block';
+      }
+    });
+
+    // Verificar se tem token válido
+    if (!localStorage.getItem('resetToken')) {
+      alert('Sessão expirada. Redirecionando...');
+      window.location.href = 'redefinirSenha.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliações - DesignFej</title>
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/avaliacoes.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">🏡 Início</a>
+            <a href="carrinho.html">🛒 Carrinho</a>
+            <a href="wishlist.html">💝 Lista de Desejos</a>
+            <button class="menu-toggle" onclick="sidebarInstance.toggle()">☰</button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="avaliacoes-container">
+            <div class="avaliacoes-header">
+                <h1>⭐ Sistema de Avaliações</h1>
+            </div>
+            
+            <section class="avaliar-produto">
+                <h2>Avaliar Produto</h2>
+                <form id="form-avaliacao">
+                    <div class="form-group">
+                        <label for="produto-select">Produto:</label>
+                        <select id="produto-select" required>
+                            <option value="">Selecione um produto</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nota:</label>
+                        <div class="rating">
+                            <div class="stars">
+                                <span class="star" data-rating="1">★</span>
+                                <span class="star" data-rating="2">★</span>
+                                <span class="star" data-rating="3">★</span>
+                                <span class="star" data-rating="4">★</span>
+                                <span class="star" data-rating="5">★</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comentario">Comentário:</label>
+                        <textarea id="comentario" placeholder="Escreva sua avaliação..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-enviar">Enviar Avaliação</button>
+                </form>
+            </section>
+
+            <section class="avaliacoes-lista">
+                <h2>Todas as Avaliações</h2>
+                <div id="avaliacoes-container"></div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        let notaSelecionada = 0;
+        
+        // Obter perfil do usuário
+        function obterPerfilUsuario() {
+            const perfil = JSON.parse(localStorage.getItem('perfilUsuario'));
+            return perfil || null;
+        }
+
+        // Lista de produtos locais
+        const produtos = {
+            1: { id: 1, nome: 'Brinco de Ouro 18k' },
+            2: { id: 2, nome: 'Colar de Prata Sterling' },
+            3: { id: 3, nome: 'Anel com Diamante' },
+            4: { id: 4, nome: 'Pulseira de Ouro' },
+            5: { id: 5, nome: 'Conjunto Esmeralda' },
+            6: { id: 6, nome: 'Aliança de Casamento' },
+            7: { id: 7, nome: 'Corrente de Ouro 18k' },
+            8: { id: 8, nome: 'Brinco com Rubi' },
+            9: { id: 9, nome: 'Pingente Aqua' }
+        };
+
+        // Carregar produtos para avaliação
+        function carregarProdutos() {
+            const select = document.getElementById('produto-select');
+            select.innerHTML = '<option value="">Selecione um produto</option>' +
+                Object.values(produtos).map(produto => 
+                    `<option value="${produto.id}">${produto.nome}</option>`
+                ).join('');
+        }
+
+        // Sistema de estrelas
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                notaSelecionada = parseInt(this.dataset.rating);
+                atualizarEstrelas();
+            });
+        });
+
+        function atualizarEstrelas() {
+            document.querySelectorAll('.star').forEach((star, index) => {
+                if (index < notaSelecionada) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
+
+        // Enviar avaliação
+        document.getElementById('form-avaliacao').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const produtoId = document.getElementById('produto-select').value;
+            const comentario = document.getElementById('comentario').value;
+            
+            if (!produtoId || !notaSelecionada || !comentario) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            const perfil = obterPerfilUsuario();
+            const nomeUsuario = (perfil && perfil.nome) ? perfil.nome : 'Usuário Anônimo';
+
+            try {
+                const response = await fetch('http://localhost:3000/api/avaliacoes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        cliente_nome: nomeUsuario,
+                        produto_id: produtoId,
+                        nota: notaSelecionada,
+                        comentario: comentario
+                    })
+                });
+                
+                if (response.ok) {
+                    alert('Avaliação enviada com sucesso!');
+                    this.reset();
+                    notaSelecionada = 0;
+                    atualizarEstrelas();
+                    carregarAvaliacoes();
+                } else {
+                    const errorData = await response.json();
+                    alert('Erro: ' + (errorData.erro || 'Erro desconhecido'));
+                    console.log('Erro detalhado:', errorData);
+                }
+            } catch (error) {
+                alert('Erro de conexão');
+            }
+        });
+
+        // Carregar todas as avaliações
+        async function carregarAvaliacoes() {
+            try {
+                const response = await fetch('http://localhost:3000/api/avaliacoes');
+                const avaliacoes = await response.json();
+                const container = document.getElementById('avaliacoes-container');
+                
+                if (avaliacoes.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">Nenhuma avaliação encontrada.</p>';
+                    return;
+                }
+                
+                container.innerHTML = avaliacoes.map(avaliacao => `
+                    <div class="avaliacao-card">
+                        <div class="avaliacao-header">
+                            <strong>${avaliacao.cliente_nome}</strong>
+                            <div class="rating-display">
+                                ${'★'.repeat(avaliacao.nota)}${'☆'.repeat(5-avaliacao.nota)}
+                            </div>
+                        </div>
+                        <p class="produto-nome">Produto: ${avaliacao.produto_nome}</p>
+                        <p class="comentario">${avaliacao.comentario}</p>
+                        <small class="data">${new Date(avaliacao.data_avaliacao).toLocaleDateString()}</small>
+                    </div>
+                `).join('');
+            } catch (error) {
+                document.getElementById('avaliacoes-container').innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">Erro ao carregar avaliações.</p>';
+            }
+        }
+
+        // Carregar dados ao abrir a página
+        carregarProdutos();
+        carregarAvaliacoes();
+    </script>
+
+    <script src="/js/sidebar.js"></script>
+    
+
+</body>
+</html>

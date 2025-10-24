@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DesignFej</title>
+  <link rel="stylesheet" href="/css/inicio.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header class="top-bar">
+  <div class="left-icons">
+    <button onclick="window.location.href='index.html'" class="icon-btn">🏠 Início</button>
+  </div>
+
+  <h1 class="logo">DesignFej</h1>
+
+  <div class="right-icons">
+    <button onclick="toggleCart()" class="icon-btn">🛒 Carrinho</button>
+    <button onclick="toggleFavorites()" class="icon-btn">❤ Favoritos</button>
+  </div>
+</header>
+
+  <main class="main-container">
+    <h2>Produtos em Destaque</h2>
+    <div class="product-list">
+      <div class="product-card">
+        <h3>Anel de Prata Solitário</h3>
+        <p class="price">R$ 95,90</p>
+        <p class="desc">Um anel elegante com pedra zircônia, ideal para ocasiões especiais.</p>
+        <button onclick="addToCart('Anel de Prata Solitário', 'Um anel elegante com pedra zircônia, ideal para ocasiões especiais.')">
+          Adicionar ao Carrinho
+        </button>
+        <button onclick="addToFavorites('Anel de Prata Solitário', 'Um anel elegante com pedra zircônia, ideal para ocasiões especiais.')">
+          ❤ Favoritar
+        </button>
+      </div>
+
+      <div class="product-card">
+        <h3>Pulseira Elegante</h3>
+        <p class="price">R$ 120,00</p>
+        <p class="desc">Pulseira de prata com detalhes minimalistas e fecho magnético.</p>
+        <button onclick="addToCart('Pulseira Elegante', 'Pulseira de prata com detalhes minimalistas e fecho magnético.')">
+          Adicionar ao Carrinho
+        </button>
+        <button onclick="addToFavorites('Pulseira Elegante', 'Pulseira de prata com detalhes minimalistas e fecho magnético.')">
+          ❤ Favoritar
+        </button>
+      </div>
+
+      <div class="product-card">
+        <h3>Colar Minimalista</h3>
+        <p class="price">R$ 85,00</p>
+        <p class="desc">Colar delicado com corrente fina e pingente de coração.</p>
+        <button onclick="addToCart('Colar Minimalista', 'Colar delicado com corrente fina e pingente de coração.')">
+          Adicionar ao Carrinho
+        </button>
+        <button onclick="addToFavorites('Colar Minimalista', 'Colar delicado com corrente fina e pingente de coração.')">
+          ❤ Favoritar
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- modal do carrinho -->
+  <div id="cart-panel" class="panel hidden">
+    <h3>Carrinho</h3>
+    <ul id="cart-items"></ul>
+    <button class="favorite-btn" onclick="finalizarCompra()">Finalizar Compra</button>
+    <button class="favorite-btn" type="submit" onclick="window.location.href='inicio.html'">Voltar</button>
+  </div>
+
+  <!-- modal de favoritos -->
+  <div id="favorites-panel" class="panel hidden">
+  <h3>Favoritos</h3>
+  <ul id="favorites-items"></ul>
+  <button class="favorite-btn" class="icon-btn" onclick="window.location.href='inicio.html'">Voltar</button>
+</div>
+  <script src="/js/script.js"></script>
+</body>
+</html>

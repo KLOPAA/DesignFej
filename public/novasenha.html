@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Nova Senha</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="container">
+    <form id="formNovaSenha">
+      <h2>Definir Nova Senha</h2>
+      <input type="email" id="email" placeholder="Digite seu e-mail" required><br><br>
+      <input type="password" id="novaSenha" placeholder="Digite a nova senha" required><br><br>
+      <button type="submit">Confirmar</button>
+    </form>
+  </div>
+  <script src="novasenha.js"></script>
+
+  <script>
+    document.getElementById("formNovaSenha").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const novaSenha = document.getElementById("novaSenha").value;
+      const mensagem = document.getElementById("mensagem");
+
+      try {
+        const resposta = await fetch("http://localhost:3000/redefinir/nova-senha", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, novaSenha })
+        });
+
+        const dados = await resposta.json();
+
+        if (dados.sucesso) {
+          mensagem.style.color = "green";
+          mensagem.textContent = "Senha atualizada com sucesso!";
+
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 5000);
+        } else {
+          mensagem.style.color = "red";
+          mensagem.textContent = dados.mensagem || "Erro ao atualizar a senha.";
+        }
+      } catch (erro) {
+        mensagem.style.color = "red";
+        mensagem.textContent = "Erro ao conectar com o servidor.";
+      }
+    });
+  </script>
+</body>
+</html>

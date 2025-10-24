@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alianças - DesignFej</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/search.js"></script>
+</head>
+
+<body>
+  <div class="overlay"></div>
+
+  <header>
+    <div class="top-bar">
+      <button onclick="window.location.href='index.html'" class="icon-btn">🏡 Inicio</button>
+      <div class="search-container">
+        <input type="text" placeholder="O que você procura?">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      <div class="icons">
+        <button onclick="window.location.href='carrinho.html'" class="icon-btn">🛒 Carrinho <span class="cart-count">0</span></button>
+        <button onclick="window.location.href='wishlist.html'" class="icon-btn">💝 Lista de Desejos</button>
+        <button onclick="window.location.href='cupons.html'" class="icon-btn">🎫 Cupons</button>
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <i class="fas fa-heart" id="favorites-icon"></i>
+      </div>
+    </div>
+  </header>
+
+  <nav class="categoria-nav">
+    <div class="item">
+      <a href="brinco.html"><img src="/img/azul-brinco.jpg" alt="Brincos"></a> 
+      <p>Brincos</p>
+    </div>
+    <div class="item">
+      <a href="colares.html"><img src="/img/b_colar-de-ouro-18k-veneziana-cora-o-esmeralda-ponto-de-luz-ye7s5dgnzq.webp" alt="Colares"></a>
+      <p>Colares</p>
+    </div>
+    <div class="item">
+      <a href="pingentes.html"><img src="/img/96d12afa-fcc5-42a0-8db8-1f1ac7b1aea4.png" alt="Pingentes"></a>
+      <p>Pingentes</p>
+    </div>
+    <div class="item">
+      <a href="alianca.html"><img src="/img/sheju-joias--9--xzuzae4vfi.webp" alt="Alianças"></a>
+      <p>Alianças</p>
+    </div>
+  </nav>
+
+  <main>
+    <h2>Alianças</h2>
+    <section class="produtos">
+      <div class="produto-card" data-categoria="aneis">
+        <img src="/img/sg-11134201-7rep2-m8enmdetakdl86.jpg" alt="Aliança de Casamento">
+        <div class="produto-info">
+          <h3>Aliança de Casamento</h3>
+          <p class="produto-preco">R$ 359,90</p>
+          <p>Aliança em ouro 18k com acabamento brilhante e comfort fit.</p>
+          <div class="produto-actions">
+            <button class="btn-carrinho"
+              onclick="addToCart('6', 'Aliança de Casamento', 359.90, '/img/sg-11134201-7rep2-m8enmdetakdl86.jpg', 'Aliança em ouro com acabamento brilhante')">Carrinho</button>
+            <button class="btn-wishlist"
+              onclick="addToWishlist('6', 'Aliança de Casamento', 359.90, '/img/sg-11134201-7rep2-m8enmdetakdl86.jpg', 'Aliança em ouro com acabamento brilhante')">Lista de Desejos</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produto-card" data-categoria="aneis">
+        <img
+          src="/img/https___lojavivara.vtexassets.com_assets_vtex.file-manager-graphql_images_148fcf84-566c-49fa-86b9-a60dac640ef6___f78756bc6ff62b3b1b3f28417cc7ca00.webp"
+          alt="Anel com Diamante">
+        <div class="produto-info">
+          <h3>Anel com Diamante</h3>
+          <p class="produto-preco">R$ 459,90</p>
+          <p>Anel solitário em ouro branco 18k com diamante central.</p>
+          <div class="produto-actions">
+            <button class="btn-carrinho"
+              onclick="addToCart('3', 'Anel com Diamante', 459.90, '/img/https___lojavivara.vtexassets.com_assets_vtex.file-manager-graphql_images_148fcf84-566c-49fa-86b9-a60dac640ef6___f78756bc6ff62b3b1b3f28417cc7ca00.webp', 'Anel solitário com diamantes')">Carrinho</button>
+            <button class="btn-wishlist"
+              onclick="addToWishlist('3', 'Anel com Diamante', 459.90, '/img/https___lojavivara.vtexassets.com_assets_vtex.file-manager-graphql_images_148fcf84-566c-49fa-86b9-a60dac640ef6___f78756bc6ff62b3b1b3f28417cc7ca00.webp', 'Anel solitário com diamante central')">Lista de Desejos</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Nova Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="close-sidebar" onclick="toggleSidebar()">&times;</span>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="perfil.html">Perfil do usuário</a></li>
+        <li><a href="avaliacoes.html">Avaliações</a></li>
+        <li class="shop-menu">
+          <div class="shop-header" onclick="toggleShopMenu()">
+            <span>SHOP</span>
+            <span class="shop-icon">+</span>
+          </div>
+          <ul class="shop-submenu" id="shop-submenu">
+            <li><a href="index.html">SHOP TODOS OS PRODUTOS</a></li>
+            <li><a href="brinco.html">BRINCOS</a></li>
+            <li><a href="colares.html">COLARES</a></li>
+            <li><a href="alianca.html">ALIANÇAS</a></li>
+            <li><a href="pingentes.html">PINGENTES</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Painel de Favoritos -->
+  <div class="panel" id="favorites-panel">
+    <div class="panel-header">
+      <h2>Meus Favoritos</h2>
+      <i class="fas fa-times panel-close" onclick="toggleFavorites()"></i>
+    </div>
+    <ul id="favorites-items"></ul>
+    <div class="panel-actions">
+      <button class="panel-btn btn-remover" onclick="removeFavoriteSelected()">Remover Selecionados</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>DesignFej Joias - Sua joalheria de confiança</p>
+    <p>@designfejjoia</p>
+  </footer>
+
+  <script>
+    // Funções para a sidebar
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuIcon = document.querySelector('.menu-icon');
+      const overlay = document.querySelector('.overlay');
+      const favoritesIcon = document.getElementById('favorites-icon');
+
+      // Fechar sidebar clicando no overlay
+      overlay.addEventListener('click', function() {
+        closeSidebar();
+      });
+
+      // Abrir/fechar favoritos
+      if (favoritesIcon) {
+        favoritesIcon.addEventListener('click', function () {
+          toggleFavorites();
+        });
+      }
+
+      // Inicializar contador do carrinho
+      updateCartCount();
+    });
+
+    // Funções da sidebar
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.querySelector('.overlay');
+      
+      if (sidebar.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.querySelector('.overlay');
+      
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Função para o menu SHOP expansível
+    function toggleShopMenu() {
+      const submenu = document.getElementById('shop-submenu');
+      const icon = document.querySelector('.shop-icon');
+      
+      if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+        icon.textContent = '+';
+      } else {
+        submenu.style.display = 'block';
+        icon.textContent = '-';
+      }
+    }
+
+    function addToCart(productId, productName, productPrice, productImage, productDetails) {
+      const cartItems = JSON.parse(localStorage.getItem('designfej_cart')) || [];
+      const existingItemIndex = cartItems.findIndex(item => item.id === productId);
+
+      if (existingItemIndex >= 0) {
+        cartItems[existingItemIndex].quantity += 1;
+      } else {
+        cartItems.push({
+          id: productId,
+          name: productName,
+          price: productPrice,
+          image: productImage,
+          details: productDetails,
+          quantity: 1
+        });
+      }
+
+      localStorage.setItem('designfej_cart', JSON.stringify(cartItems));
+      updateCartCount();
+
+      if (confirm(`${productName} adicionado ao carrinho! Deseja ir para o carrinho agora?`)) {
+        window.location.href = 'carrinho.html';
+      }
+    }
+    
+    function addToWishlist(productId, productName, productPrice, productImage, productDetails) {
+      const wishlistItems = JSON.parse(localStorage.getItem('designfej_wishlist')) || [];
+      const existingItem = wishlistItems.find(item => item.id === productId);
+      
+      if (existingItem) {
+        alert(`${productName} já está na sua lista de desejos!`);
+        return;
+      }
+      
+      wishlistItems.push({
+        id: productId,
+        name: productName,
+        price: productPrice,
+        image: productImage,
+        details: productDetails
+      });
+      
+      localStorage.setItem('designfej_wishlist', JSON.stringify(wishlistItems));
+      
+      if (confirm(`${productName} adicionado à wishlist! Deseja ver sua lista de desejos?`)) {
+        window.location.href = 'wishlist.html';
+      }
+    }
+
+    function updateCartCount() {
+      const cartItems = JSON.parse(localStorage.getItem('designfej_cart')) || [];
+      const cartCountElement = document.querySelector('.cart-count');
+      if (cartCountElement) {
+        cartCountElement.textContent = cartItems.length;
+      }
+    }
+
+    // Alternar visibilidade do painel de favoritos
+    function toggleFavorites() {
+      const panel = document.getElementById("favorites-panel");
+      const overlay = document.querySelector('.overlay');
+
+      if (panel && panel.classList.contains('open')) {
+        panel.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      } else if (panel) {
+        // Carregar favoritos
+        renderFavorites();
+
+        panel.classList.add('open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // Renderizar itens favoritos
+    function renderFavorites() {
+      const list = document.getElementById("favorites-items");
+      const favorites = JSON.parse(localStorage.getItem('designfej_favorites')) || [];
+
+      if (!list) return;
+
+      list.innerHTML = "";
+
+      if (favorites.length === 0) {
+        list.innerHTML = "<li class='empty-message'>Você não tem favoritos</li>";
+        return;
+      }
+
+      favorites.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.className = "favorite-item";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "item-checkbox";
+        checkbox.dataset.index = index;
+
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "item-info";
+        infoDiv.innerHTML = `<strong>${item.name}</strong><br><small>${item.details}</small>`;
+
+        const excluirBtn = document.createElement("button");
+        excluirBtn.className = "excluir-btn";
+        excluirBtn.innerHTML = 'Excluir';
+        excluirBtn.onclick = () => {
+          if (checkbox.checked) {
+            favorites.splice(index, 1);
+            localStorage.setItem('designfej_favorites', JSON.stringify(favorites));
+            renderFavorites();
+          } else {
+            alert("Marque a caixinha para excluir este favorito.");
+          }
+        };
+
+        li.appendChild(checkbox);
+        li.appendChild(infoDiv);
+        li.appendChild(excluirBtn);
+
+        list.appendChild(li);
+      });
+    }
+
+    // Remover itens selecionados dos favoritos
+    function removeFavoriteSelected() {
+      const favorites = JSON.parse(localStorage.getItem('designfej_favorites')) || [];
+      const checkboxes = document.querySelectorAll('#favorites-items input[type="checkbox"]');
+      const indexesToRemove = [];
+
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          indexesToRemove.push(parseInt(checkbox.dataset.index));
+        }
+      });
+
+      if (indexesToRemove.length === 0) {
+        alert("Selecione pelo menos um item para remover.");
+        return;
+      }
+
+      indexesToRemove.sort((a, b) => b - a).forEach(i => favorites.splice(i, 1));
+
+      localStorage.setItem('designfej_favorites', JSON.stringify(favorites));
+      renderFavorites();
+    }
+
+    // Função para buscar produtos por nome
+    function buscarProdutos(termo) {
+      const produtos = document.querySelectorAll('.produto-card');
+      
+      produtos.forEach(produto => {
+        const nome = produto.querySelector('h3').textContent.toLowerCase();
+        const descricao = produto.querySelector('p').textContent.toLowerCase();
+        
+        if (nome.includes(termo) || descricao.includes(termo)) {
+          produto.style.display = 'block';
+        } else {
+          produto.style.display = 'none';
+        }
+      });
+    }
+
+    // Configuração da busca
+    const searchInput = document.querySelector('.search-container input');
+    const searchIcon = document.querySelector('.search-icon');
+
+    if (searchIcon && searchInput) {
+      function performSearch() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        if (searchTerm) {
+          buscarProdutos(searchTerm);
+        } else {
+          // Mostrar todos os produtos se busca estiver vazia
+          const produtos = document.querySelectorAll('.produto-card');
+          produtos.forEach(produto => {
+            produto.style.display = 'block';
+          });
+        }
+      }
+
+      searchIcon.addEventListener('click', performSearch);
+      searchInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          performSearch();
+        }
+      });
+      
+      searchInput.addEventListener('input', performSearch);
+    }
+  </script>
+
+</body>
+
+</html>
