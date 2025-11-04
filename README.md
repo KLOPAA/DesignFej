@@ -78,42 +78,61 @@ npm run dev
 ## Funcionalidades Implementadas
 
 **Total: 25 Funcionalidades Distintas**
+Funcionalidades por Categoria:
+Autenticação e Usuário (4)
+Cadastro de usuários
 
-### ✅ **Autenticação e Usuário (4 funcionalidades)**
-1. **Cadastro de usuários** - Registro de novos clientes
-2. **Login de usuários** - Autenticação no sistema
-3. **Redefinição de senha** - Recuperação de acesso
-4. **Perfil do usuário** - Gerenciamento de dados pessoais
+Login de usuários
 
-### ✅ **Catálogo e Produtos (5 funcionalidades)**
-5. **Catálogo de produtos** - Exibição de joias por categoria
-6. **Páginas de categorias** - Brincos, Colares, Pingentes, Alianças
-7. **Busca de produtos** - Sistema de pesquisa
-8. **Controle de estoque** - Monitoramento automático via Observer
-9. **Exibição de estoque** - Visualização em tempo real
+Redefinição de senha
 
-### ✅ **Carrinho e Compras (6 funcionalidades)**
-10. **Carrinho de compras** - Adicionar/remover produtos
-11. **Sistema de cupons** - Descontos com padrão Decorator
-12. **Remoção de cupons** - Cancelar descontos aplicados
-13. **Cálculo de frete fixo** - R$ 15,90 para todo Brasil
-14. **Finalização de compra** - Processo completo de checkout
-15. **Métodos de pagamento** - Cartão de crédito/débito
+Perfil do usuário
 
-### ✅ **Pedidos e Rastreamento (4 funcionalidades)**
-16. **Meus Pedidos** - Histórico de compras
-17. **Rastreamento de pedidos** - Timeline de status
-18. **Atualização automática de status** - Progressão realística
-19. **Simulação manual de status** - Botão para testar atualizações
+Catálogo e Produtos (5)
+Catálogo de produtos
 
-### ✅ **Funcionalidades Extras (6 funcionalidades)**
-20. **Lista de desejos (Wishlist)** - Produtos favoritos
-21. **Sistema de avaliações** - Feedback de produtos
-22. **Sidebar de navegação** - Menu lateral responsivo
-23. **Dashboard administrativo** - Painel de controle
-24. **Sistema de notificações** - Alertas via Observer
-25. **Backup automático** - Serviço de backup de dados
+Páginas de categorias (Brincos, Colares, Pingentes, Alianças)
 
+Busca de produtos
+
+Controle de estoque
+
+Exibição de estoque
+
+Carrinho e Compras (6)
+Carrinho de compras
+
+Sistema de cupons
+
+Remoção de cupons
+
+Cálculo de frete fixo
+
+Finalização de compra
+
+Métodos de pagamento
+
+Pedidos e Rastreamento (4)
+Meus Pedidos
+
+Rastreamento de pedidos
+
+Atualização automática de status
+
+Simulação manual de status
+
+Funcionalidades Extras (6)
+Lista de desejos (Wishlist)
+
+Sistema de avaliações
+
+Sidebar de navegação
+
+Dashboard administrativo
+
+Sistema de notificações
+
+Backup automático
 ## Design Patterns Implementados
 
 ### 🔹 Singleton
