@@ -1,0 +1,105 @@
+/* Estilos para controle de estoque */
+.produto-estoque {
+    font-size: 0.9em;
+    color: #28a745;
+    font-weight: 500;
+    margin: 5px 0;
+    padding: 3px 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border-left: 3px solid #28a745;
+}
+
+.produto-estoque.estoque-baixo {
+    color: #ffc107;
+    border-left-color: #ffc107;
+    background-color: #fff3cd;
+}
+
+.produto-estoque.esgotado {
+    color: #dc3545;
+    border-left-color: #dc3545;
+    background-color: #f8d7da;
+    font-weight: bold;
+}
+
+.estoque-quantidade {
+    font-weight: bold;
+}
+
+/* Alertas de estoque */
+.alerta-estoque,
+.alerta-esgotado {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    max-width: 300px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease-out;
+}
+
+.alerta-estoque {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+}
+
+.alerta-esgotado {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.alerta-content {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Botão desabilitado */
+.btn-carrinho:disabled {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    cursor: not-allowed !important;
+    opacity: 0.65;
+}
+
+/* Indicador visual de estoque baixo no card */
+.produto-card.estoque-critico {
+    border: 2px solid #ffc107;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+}
+
+.produto-card.esgotado {
+    border: 2px solid #dc3545;
+    opacity: 0.7;
+    position: relative;
+}
+
+.produto-card.esgotado::after {
+    content: "ESGOTADO";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 10;
+}

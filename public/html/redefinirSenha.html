@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Redefinir Senha</title>
+  <link rel="stylesheet" href="/css/redefinirSenha.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="container">
+    <form id="formRedefinir">
+      <h2>Redefinir Senha</h2>
+      <p>Digite seu e-mail para redefinir a senha:</p><br>
+      <input type="email" id="email" placeholder="Digite seu e-mail" required>
+      <button type="submit">Solicitar redefinição</button>
+      <button type="button" onclick="window.location.href='login.html'">Voltar</button>
+      
+      <!-- Mensagem de erro -->
+      <div id="errorMessage" style="display: none; color: red; margin-top: 10px;"></div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('formRedefinir').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const errorMessage = document.getElementById('errorMessage');
+
+      if (!email) {
+        errorMessage.innerText = 'Por favor, insira seu e-mail';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/redefinir/verificar-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (data.existe) {
+          // Salvar token no localStorage para usar na próxima página
+          localStorage.setItem('resetToken', data.token);
+          window.location.href = 'definirNovaSenha.html';  
+        } else {
+          errorMessage.innerText = 'E-mail não encontrado. Tente novamente.';
+          errorMessage.style.display = 'block';
+        }
+      } catch (error) {
+        errorMessage.innerText = 'Erro de conexão. Tente novamente.';
+        errorMessage.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
