@@ -9,6 +9,7 @@ router.post('/finalizar', async (req, res) => {
     await compraController.finalizarCompra(req, res);
 });
 
+<<<<<<< HEAD
 // Rota para obter pedidos do usuário
 router.get('/pedidos', async (req, res) => {
     await compraController.obterPedidosUsuario(req, res);
@@ -24,4 +25,6 @@ router.get('/rastreamento/:codigo', async (req, res) => {
     await compraController.obterRastreamento(req, res);
 });
 
+=======
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 module.exports = router;

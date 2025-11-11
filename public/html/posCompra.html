@@ -6,7 +6,10 @@
     <title>Finalizar Compra - DesignFej</title>
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/posCompra.css">
+<<<<<<< HEAD
     <script src="/js/posCompra.js"></script>
+=======
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 </head>
 <body>
     <header>
@@ -76,11 +79,199 @@
                 <p>Frete: R$ <span id="total-frete">0,00</span></p>
                 <hr>
                 <p class="total-geral"><strong>Total: R$ <span id="total-geral">0,00</span></strong></p>
+<<<<<<< HEAD
                 <button onclick="posCompraController.confirmarPedido()" class="btn-confirmar">Confirmar Pedido</button>
+=======
+                <button onclick="confirmarPedido()" class="btn-confirmar">Confirmar Pedido</button>
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
             </div>
         </div>
     </main>
 
+<<<<<<< HEAD
 
+=======
+    <script>
+        let dadosPedido = {
+            itens: [],
+            subtotal: 0,
+            frete: 0,
+            total: 0
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarItensPedido();
+            aplicarFreteFixo();
+            configurarCamposCartao();
+        });
+
+        function carregarItensPedido() {
+            const cartItems = JSON.parse(localStorage.getItem('designfej_cart')) || [];
+            const container = document.getElementById('itens-pedido');
+            let subtotal = 0;
+
+            if (cartItems.length === 0) {
+                container.innerHTML = '<p>Nenhum item no carrinho</p>';
+                return;
+            }
+
+            cartItems.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                container.innerHTML += `
+                    <div class="item-pedido">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="item-info">
+                            <h4>${item.name}</h4>
+                            <p>Quantidade: ${item.quantity}</p>
+                            <p>Preço unitário: R$ ${item.price.toFixed(2)}</p>
+                            <p><strong>Total: R$ ${itemTotal.toFixed(2)}</strong></p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            dadosPedido.itens = cartItems;
+            dadosPedido.subtotal = subtotal;
+            
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('total-subtotal').textContent = subtotal.toFixed(2);
+            atualizarTotal();
+        }
+
+        function aplicarFreteFixo() {
+            dadosPedido.frete = 15.90;
+            atualizarTotal();
+        }
+        
+        function configurarCamposCartao() {
+            // Formatar número do cartão
+            document.getElementById('numero-cartao').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+                e.target.value = value;
+            });
+            
+            // Formatar validade
+            document.getElementById('validade').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                e.target.value = value;
+            });
+            
+            // Apenas números no CVV
+            document.getElementById('cvv').addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '');
+            });
+        }
+
+        function atualizarTotal() {
+            const total = dadosPedido.subtotal + dadosPedido.frete;
+            dadosPedido.total = total;
+            
+            document.getElementById('total-frete').textContent = dadosPedido.frete.toFixed(2);
+            document.getElementById('total-geral').textContent = total.toFixed(2);
+        }
+
+        async function confirmarPedido() {
+            if (!validarPagamento()) {
+                return;
+            }
+            
+            const metodoPagamento = document.querySelector('input[name="pagamento"]:checked').value;
+            const nomeCartao = document.getElementById('nome-cartao').value;
+            const tipoPagamento = `Cartão de ${metodoPagamento === 'credito' ? 'Crédito' : 'Débito'}`;
+            
+            try {
+                // Salvar pedido no banco de dados
+                const response = await fetch('/api/compras/finalizar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        itens: dadosPedido.itens.map(item => ({
+                            produtoId: item.id,
+                            quantidade: item.quantity
+                        })),
+                        nomeUsuario: nomeCartao,
+                        tipoPagamento: tipoPagamento,
+                        valorTotal: dadosPedido.total
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Criar pedido para localStorage (compatibilidade)
+                    const pedido = {
+                        id: result.numeroPedido.replace(/[#\s]/g, ''),
+                        data: new Date().toISOString(),
+                        itens: dadosPedido.itens,
+                        subtotal: dadosPedido.subtotal,
+                        frete: dadosPedido.frete,
+                        total: dadosPedido.total,
+                        status: 'Confirmado',
+                        pagamento: tipoPagamento,
+                        titular: nomeCartao,
+                        codigoRastreamento: 'BR' + Math.random().toString().slice(2, 11)
+                    };
+                    
+                    // Salvar no localStorage
+                    const pedidos = JSON.parse(localStorage.getItem('designfej_pedidos')) || [];
+                    pedidos.push(pedido);
+                    localStorage.setItem('designfej_pedidos', JSON.stringify(pedidos));
+                    
+                    alert(`Pedido confirmado!\nNúmero: ${result.numeroPedido}\nTotal: R$ ${dadosPedido.total.toFixed(2)}\nFrete: R$ ${dadosPedido.frete.toFixed(2)}\nPagamento: ${tipoPagamento}\nTitular: ${nomeCartao}`);
+                    
+                    // Limpa carrinho
+                    localStorage.removeItem('designfej_cart');
+                    
+                    // Redireciona para meus pedidos
+                    setTimeout(() => {
+                        window.location.href = 'meusPedidos.html';
+                    }, 2000);
+                } else {
+                    alert('Erro ao confirmar pedido: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Erro ao confirmar pedido:', error);
+                alert('Erro ao confirmar pedido. Tente novamente.');
+            }
+        }
+        
+        function validarPagamento() {
+            const numeroCartao = document.getElementById('numero-cartao').value.replace(/\s/g, '');
+            const validade = document.getElementById('validade').value;
+            const cvv = document.getElementById('cvv').value;
+            const nomeCartao = document.getElementById('nome-cartao').value.trim();
+            
+            if (numeroCartao.length !== 16) {
+                alert('Por favor, digite um número de cartão válido (16 dígitos)');
+                return false;
+            }
+            
+            if (validade.length !== 5 || !validade.includes('/')) {
+                alert('Por favor, digite uma validade válida (MM/AA)');
+                return false;
+            }
+            
+            if (cvv.length !== 3) {
+                alert('Por favor, digite um CVV válido (3 dígitos)');
+                return false;
+            }
+            
+            if (nomeCartao.length < 2) {
+                alert('Por favor, digite o nome do titular do cartão');
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 </body>
 </html>

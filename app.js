@@ -12,7 +12,10 @@ const avaliacoesRouter = require('./src/routes/avaliacoes');
 const cuponsRouter = require('./src/routes/cupons');
 const produtosRouter = require('./src/routes/produtos');
 const comprasRouter = require('./src/routes/compras');
+<<<<<<< HEAD
 const estoqueRouter = require('./src/routes/estoque');
+=======
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -94,10 +97,13 @@ app.get('/meusPedidos.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'meusPedidos.html'));
 });
 
+<<<<<<< HEAD
 app.get('/estoque.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'estoque.html'));
 });
 
+=======
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 // Rotas da API
 app.use('/cadastro', cadastroRouter);
 app.use('/login', loginRouter);
@@ -106,7 +112,10 @@ app.use('/api/avaliacoes', avaliacoesRouter);
 app.use('/api/cupons', cuponsRouter);
 app.use('/api/produtos', produtosRouter);
 app.use('/api/compras', comprasRouter);
+<<<<<<< HEAD
 app.use('/api/estoque', estoqueRouter);
+=======
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 
 // Middleware de tratamento de erros
 app.use((err, req, res, next) => {

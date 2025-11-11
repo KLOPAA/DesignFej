@@ -9,7 +9,10 @@
   <link rel="stylesheet" href="/css/sidebar.css">
   <link rel="stylesheet" href="/css/cupons.css">
   <script src="/js/sidebar.js"></script>
+<<<<<<< HEAD
   <script src="/js/cupons.js"></script>
+=======
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 </head>
 
 <body>
@@ -38,7 +41,11 @@
       <h3>Validar Cupom</h3>
       <div class="cupom-form">
         <input type="text" id="codigo-cupom" placeholder="Digite o código do cupom" maxlength="50" autocomplete="off" spellcheck="false">
+<<<<<<< HEAD
         <button onclick="cuponsController.validarCupom()">Validar</button>
+=======
+        <button onclick="validarCupom()">Validar</button>
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
       </div>
       <div id="resultado-validacao"></div>
     </section>
@@ -120,12 +127,62 @@
       }
     }
 
+<<<<<<< HEAD
+=======
+    // Carregar cupons disponíveis
+    function carregarCupons() {
+      const cupons = [
+        { codigo: 'DESCONTO10', tipo: 'fixo', valor: 10, data_fim: '2025-12-31' },
+        { codigo: 'FRETE20', tipo: 'fixo', valor: 20, data_fim: '2026-01-30' },
+        { codigo: 'PRIMEIRA15', tipo: 'percentual', valor: 15, data_fim: '2025-11-15' },
+        { codigo: 'GLEISON60', tipo: 'percentual', valor: 60, data_fim: '2025-11-31' },
+        { codigo: 'EXPIRADO50', tipo: 'percentual', valor: 50, data_fim: '2024-12-31', status: 'EXPIRADO' },
+        { codigo: 'INVALIDO25', tipo: 'percentual', valor: 25, data_fim: '2025-06-30', status: 'INVÁLIDO' }
+      ];
+      
+      const lista = document.getElementById('cupons-lista');
+      lista.innerHTML = cupons.map(cupom => `
+        <div class="cupom-card ${cupom.status ? 'cupom-invalido' : ''}">
+          <h4>${cupom.codigo} ${cupom.status ? '(' + cupom.status + ')' : ''}</h4>
+          <p>Tipo: ${cupom.tipo}</p>
+          <p>Valor: ${cupom.tipo === 'percentual' ? cupom.valor + '%' : 'R$ ' + cupom.valor}</p>
+          <p>Válido até: ${new Date(cupom.data_fim).toLocaleDateString()}</p>
+          <button onclick="copiarCodigo('${cupom.codigo}')" ${cupom.status ? 'disabled' : ''}>Copiar Código</button>
+        </div>
+      `).join('');
+    }
+
+    // Validar cupom
+    function validarCupom() {
+      const codigo = document.getElementById('codigo-cupom').value;
+      if (!codigo) return;
+
+      const cuponsValidos = ['DESCONTO10', 'FRETE20', 'PRIMEIRA15', 'GLEISON60'];
+      const div = document.getElementById('resultado-validacao');
+      
+      if (cuponsValidos.includes(codigo.toUpperCase())) {
+        div.innerHTML = `<p style="color: green;">✅ Cupom válido!</p>`;
+      } else {
+        div.innerHTML = `<p style="color: red;">❌ Cupom inválido ou expirado</p>`;
+      }
+    }
+
+    function copiarCodigo(codigo) {
+      navigator.clipboard.writeText(codigo);
+      alert('Código copiado: ' + codigo);
+    }
+
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
     document.addEventListener('DOMContentLoaded', function () {
       const overlay = document.querySelector('.overlay');
       overlay.addEventListener('click', function() {
         closeSidebar();
       });
       updateCartCount();
+<<<<<<< HEAD
+=======
+      carregarCupons();
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
     });
   </script>
 

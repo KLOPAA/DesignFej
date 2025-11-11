@@ -64,6 +64,7 @@ class CupomController {
         try {
             const cupons = await cupomRepository.listarAtivos();
             
+<<<<<<< HEAD
             res.json({
                 success: true,
                 cupons: cupons.map(c => c.toJSON())
@@ -93,6 +94,13 @@ class CupomController {
                 success: false,
                 erro: 'Erro ao listar cupons' 
             });
+=======
+            res.json(cupons.map(c => c.toJSON()));
+
+        } catch (error) {
+            console.error('[ERRO] Erro ao listar cupons:', error.message);
+            res.status(500).json({ erro: 'Erro ao listar cupons' });
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
         }
     }
 

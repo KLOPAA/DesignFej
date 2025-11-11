@@ -99,6 +99,7 @@ class CupomRepository {
         });
     }
 
+<<<<<<< HEAD
     async listarTodos() {
         return new Promise((resolve, reject) => {
             const sql = 'SELECT * FROM cupons ORDER BY data_fim ASC';
@@ -124,6 +125,8 @@ class CupomRepository {
         });
     }
 
+=======
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
     async desativar(id) {
         return new Promise((resolve, reject) => {
             const sql = 'UPDATE cupons SET ativo = 0 WHERE id = ?';

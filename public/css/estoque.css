@@ -102,6 +102,7 @@
     font-size: 18px;
     border-radius: 5px;
     z-index: 10;
+<<<<<<< HEAD
 }
 
 /* Estilos para página de gerenciamento de estoque */
@@ -374,4 +375,6 @@
     .estatisticas {
         grid-template-columns: repeat(2, 1fr);
     }
+=======
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 }

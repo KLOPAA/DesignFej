@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS cupons (
 CREATE TABLE IF NOT EXISTS pedidos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     numero_pedido VARCHAR(20) NOT NULL UNIQUE,
+<<<<<<< HEAD
     id_usuario INT NOT NULL,
     valor_total DECIMAL(10, 2) NOT NULL,
     frete DECIMAL(10, 2) NOT NULL DEFAULT 15.90,
@@ -85,6 +86,13 @@ CREATE TABLE IF NOT EXISTS rastreamento (
     descricao TEXT,
     data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_pedido) REFERENCES pedidos(id) ON DELETE CASCADE
+=======
+    valor_total DECIMAL(10, 2) NOT NULL,
+    frete DECIMAL(10, 2) NOT NULL DEFAULT 15.90,
+    tipo_pagamento VARCHAR(50) NOT NULL,
+    nome_usuario VARCHAR(100) NOT NULL,
+    data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 );
 
 -- Inserir produtos de exemplo

@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/meusPedidos.css">
     <link rel="stylesheet" href="/css/sidebar.css">
+<<<<<<< HEAD
     <script src="/js/meusPedidos.js"></script>
+=======
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 </head>
 <body>
     <header>
@@ -20,8 +23,13 @@
 
     <main class="pedidos-container">
         <div class="controles-pedidos">
+<<<<<<< HEAD
             <button onclick="meusPedidosController.simularAtualizacao()" class="btn-simular">🔄 Simular Atualização de Status</button>
             <button onclick="meusPedidosController.limparTodosPedidos()" class="btn-limpar">🗑️ Limpar Todos os Pedidos</button>
+=======
+            <button onclick="simularAtualizacao()" class="btn-simular">🔄 Simular Atualização de Status</button>
+            <button onclick="limparTodosPedidos()" class="btn-limpar">🗑️ Limpar Todos os Pedidos</button>
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
         </div>
         
         <div id="pedidos-lista">
@@ -50,10 +58,313 @@
     </aside>
 
     <script>
+<<<<<<< HEAD
+=======
+        let pedidos = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarPedidos();
+            iniciarAtualizacaoStatus();
+        });
+
+        function carregarPedidos() {
+            pedidos = JSON.parse(localStorage.getItem('designfej_pedidos')) || [];
+            
+            // Criar pedido de exemplo se não houver nenhum
+            if (pedidos.length === 0) {
+                const pedidoExemplo = {
+                    id: '123456',
+                    data: new Date().toISOString(),
+                    itens: [
+                        { name: 'Brinco de Ouro 18k', quantity: 1, price: 289.90 },
+                        { name: 'Colar de Prata Sterling', quantity: 1, price: 189.90 }
+                    ],
+                    subtotal: 479.80,
+                    frete: 15.90,
+                    total: 495.70,
+                    status: 'Confirmado',
+                    pagamento: 'Cartão de Crédito',
+                    titular: 'João Silva',
+                    codigoRastreamento: 'BR123456789'
+                };
+                pedidos.push(pedidoExemplo);
+                localStorage.setItem('designfej_pedidos', JSON.stringify(pedidos));
+            }
+            
+            if (pedidos.length === 0) {
+                document.getElementById('sem-pedidos').style.display = 'block';
+                return;
+            }
+
+            renderizarPedidos();
+        }
+
+        function renderizarPedidos() {
+            const container = document.getElementById('pedidos-lista');
+            let html = '';
+
+            pedidos.forEach((pedido, index) => {
+                const statusClass = getStatusClass(pedido.status);
+                const statusIcon = getStatusIcon(pedido.status);
+                
+                html += `
+                    <div class="pedido-card">
+                        <div class="pedido-header">
+                            <div class="pedido-info">
+                                <h3>Pedido #${pedido.id}</h3>
+                                <p class="pedido-data">${formatarData(pedido.data)}</p>
+                            </div>
+                            <div class="pedido-status ${statusClass}">
+                                ${statusIcon} ${pedido.status}
+                            </div>
+                        </div>
+                        
+                        <div class="pedido-itens">
+                            ${pedido.itens.map(item => `
+                                <div class="item-resumo">
+                                    <span>${item.name} (${item.quantity}x)</span>
+                                    <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="pedido-valores">
+                            <div class="valor-linha">
+                                <span>Subtotal:</span>
+                                <span>R$ ${pedido.subtotal.toFixed(2)}</span>
+                            </div>
+                            <div class="valor-linha">
+                                <span>Frete:</span>
+                                <span>R$ ${pedido.frete.toFixed(2)}</span>
+                            </div>
+                            <div class="valor-total">
+                                <span>Total:</span>
+                                <span>R$ ${pedido.total.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pedido-rastreamento">
+                            <h4>📦 Rastreamento</h4>
+                            <div class="timeline">
+                                ${gerarTimeline(pedido.status)}
+                            </div>
+                            ${pedido.codigoRastreamento ? `
+                                <div class="codigo-rastreamento">
+                                    <strong>Código de rastreamento:</strong> ${pedido.codigoRastreamento}
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="pedido-acoes">
+                            <button data-action="detalhes" data-index="${index}" class="btn-detalhes">Ver Detalhes</button>
+                            ${pedido.status === 'Confirmado' ? `
+                                <button data-action="cancelar" data-index="${index}" class="btn-cancelar">Cancelar</button>
+                            ` : ''}
+                            <button data-action="apagar" data-index="${index}" class="btn-apagar">🗑️ Apagar</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            
+            // Adicionar event listeners para os botões
+            container.querySelectorAll('button[data-action]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.getAttribute('data-action');
+                    const index = parseInt(this.getAttribute('data-index'));
+                    
+                    switch(action) {
+                        case 'detalhes':
+                            verDetalhes(index);
+                            break;
+                        case 'cancelar':
+                            cancelarPedido(index);
+                            break;
+                        case 'apagar':
+                            apagarPedido(index);
+                            break;
+                    }
+                });
+            });
+        }
+
+        function getStatusClass(status) {
+            const classes = {
+                'Confirmado': 'status-confirmado',
+                'Preparando': 'status-preparando',
+                'Enviado': 'status-enviado',
+                'Em Trânsito': 'status-transito',
+                'Entregue': 'status-entregue',
+                'Cancelado': 'status-cancelado'
+            };
+            return classes[status] || 'status-default';
+        }
+
+        function getStatusIcon(status) {
+            const icons = {
+                'Confirmado': '✅',
+                'Preparando': '📦',
+                'Enviado': '🚚',
+                'Em Trânsito': '🛣️',
+                'Entregue': '🎉',
+                'Cancelado': '❌'
+            };
+            return icons[status] || '📋';
+        }
+
+        function gerarTimeline(status) {
+            const etapas = [
+                { nome: 'Confirmado', concluida: true },
+                { nome: 'Preparando', concluida: ['Preparando', 'Enviado', 'Em Trânsito', 'Entregue'].includes(status) },
+                { nome: 'Enviado', concluida: ['Enviado', 'Em Trânsito', 'Entregue'].includes(status) },
+                { nome: 'Em Trânsito', concluida: ['Em Trânsito', 'Entregue'].includes(status) },
+                { nome: 'Entregue', concluida: status === 'Entregue' }
+            ];
+
+            return etapas.map(etapa => `
+                <div class="timeline-item ${etapa.concluida ? 'concluida' : ''}">
+                    <div class="timeline-dot"></div>
+                    <span>${etapa.nome}</span>
+                </div>
+            `).join('');
+        }
+
+        function formatarData(data) {
+            return new Date(data).toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function verDetalhes(index) {
+            const pedido = pedidos[index];
+            alert(`Detalhes do Pedido #${pedido.id}\n\nStatus: ${pedido.status}\nData: ${formatarData(pedido.data)}\nTotal: R$ ${pedido.total.toFixed(2)}\nPagamento: ${pedido.pagamento}`);
+        }
+
+        function cancelarPedido(index) {
+            if (confirm('Tem certeza que deseja cancelar este pedido?')) {
+                pedidos[index].status = 'Cancelado';
+                localStorage.setItem('designfej_pedidos', JSON.stringify(pedidos));
+                renderizarPedidos();
+                alert('Pedido cancelado com sucesso!');
+            }
+        }
+
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('open');
         }
+<<<<<<< HEAD
+=======
+        
+        function iniciarAtualizacaoStatus() {
+            // Atualizar status a cada 10 segundos
+            setInterval(() => {
+                atualizarStatusPedidos();
+            }, 10000);
+        }
+        
+        function atualizarStatusPedidos() {
+            let houveMudanca = false;
+            
+            pedidos.forEach(pedido => {
+                if (pedido.status !== 'Entregue' && pedido.status !== 'Cancelado') {
+                    const novoStatus = proximoStatus(pedido.status);
+                    if (novoStatus !== pedido.status) {
+                        pedido.status = novoStatus;
+                        houveMudanca = true;
+                        console.log(`📦 Pedido #${pedido.id} atualizado para: ${novoStatus}`);
+                    }
+                }
+            });
+            
+            if (houveMudanca) {
+                localStorage.setItem('designfej_pedidos', JSON.stringify(pedidos));
+                renderizarPedidos();
+            }
+        }
+        
+        function proximoStatus(statusAtual) {
+            const sequencia = {
+                'Confirmado': 'Preparando',
+                'Preparando': 'Enviado', 
+                'Enviado': 'Em Trânsito',
+                'Em Trânsito': 'Entregue'
+            };
+            
+            // 30% de chance de avançar para próximo status
+            if (Math.random() < 0.3) {
+                return sequencia[statusAtual] || statusAtual;
+            }
+            
+            return statusAtual;
+        }
+        
+        function simularAtualizacao() {
+            let houveMudanca = false;
+            
+            pedidos.forEach(pedido => {
+                if (pedido.status !== 'Entregue' && pedido.status !== 'Cancelado') {
+                    const novoStatus = forcarProximoStatus(pedido.status);
+                    if (novoStatus !== pedido.status) {
+                        pedido.status = novoStatus;
+                        houveMudanca = true;
+                    }
+                }
+            });
+            
+            if (houveMudanca) {
+                localStorage.setItem('designfej_pedidos', JSON.stringify(pedidos));
+                renderizarPedidos();
+                alert('📦 Status dos pedidos atualizado!');
+            } else {
+                alert('✅ Todos os pedidos já estão finalizados!');
+            }
+        }
+        
+        function forcarProximoStatus(statusAtual) {
+            const sequencia = {
+                'Confirmado': 'Preparando',
+                'Preparando': 'Enviado', 
+                'Enviado': 'Em Trânsito',
+                'Em Trânsito': 'Entregue'
+            };
+            
+            return sequencia[statusAtual] || statusAtual;
+        }
+        
+        function apagarPedido(index) {
+            const pedido = pedidos[index];
+            if (confirm(`Tem certeza que deseja apagar o pedido #${pedido.id}?\nEsta ação não pode ser desfeita.`)) {
+                pedidos.splice(index, 1);
+                localStorage.setItem('designfej_pedidos', JSON.stringify(pedidos));
+                
+                if (pedidos.length === 0) {
+                    document.getElementById('sem-pedidos').style.display = 'block';
+                    document.getElementById('pedidos-lista').innerHTML = '';
+                } else {
+                    renderizarPedidos();
+                }
+                
+                alert('Pedido apagado com sucesso!');
+            }
+        }
+        
+        function limparTodosPedidos() {
+            if (confirm('Tem certeza que deseja apagar TODOS os pedidos?\nEsta ação não pode ser desfeita.')) {
+                pedidos = [];
+                localStorage.removeItem('designfej_pedidos');
+                document.getElementById('sem-pedidos').style.display = 'block';
+                document.getElementById('pedidos-lista').innerHTML = '';
+                alert('Todos os pedidos foram apagados!');
+            }
+        }
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
     </script>
 </body>
 </html>

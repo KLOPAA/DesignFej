@@ -78,6 +78,7 @@ npm run dev
 ## Funcionalidades Implementadas
 
 **Total: 25 Funcionalidades Distintas**
+<<<<<<< HEAD
 Funcionalidades por Categoria:
 Autenticação e Usuário (4)
 Cadastro de usuários
@@ -133,6 +134,44 @@ Dashboard administrativo
 Sistema de notificações
 
 Backup automático
+=======
+
+### ✅ **Autenticação e Usuário (4 funcionalidades)**
+1. **Cadastro de usuários** - Registro de novos clientes
+2. **Login de usuários** - Autenticação no sistema
+3. **Redefinição de senha** - Recuperação de acesso
+4. **Perfil do usuário** - Gerenciamento de dados pessoais
+
+### ✅ **Catálogo e Produtos (5 funcionalidades)**
+5. **Catálogo de produtos** - Exibição de joias por categoria
+6. **Páginas de categorias** - Brincos, Colares, Pingentes, Alianças
+7. **Busca de produtos** - Sistema de pesquisa
+8. **Controle de estoque** - Monitoramento automático via Observer
+9. **Exibição de estoque** - Visualização em tempo real
+
+### ✅ **Carrinho e Compras (6 funcionalidades)**
+10. **Carrinho de compras** - Adicionar/remover produtos
+11. **Sistema de cupons** - Descontos com padrão Decorator
+12. **Remoção de cupons** - Cancelar descontos aplicados
+13. **Cálculo de frete fixo** - R$ 15,90 para todo Brasil
+14. **Finalização de compra** - Processo completo de checkout
+15. **Métodos de pagamento** - Cartão de crédito/débito
+
+### ✅ **Pedidos e Rastreamento (4 funcionalidades)**
+16. **Meus Pedidos** - Histórico de compras
+17. **Rastreamento de pedidos** - Timeline de status
+18. **Atualização automática de status** - Progressão realística
+19. **Simulação manual de status** - Botão para testar atualizações
+
+### ✅ **Funcionalidades Extras (6 funcionalidades)**
+20. **Lista de desejos (Wishlist)** - Produtos favoritos
+21. **Sistema de avaliações** - Feedback de produtos
+22. **Sidebar de navegação** - Menu lateral responsivo
+23. **Dashboard administrativo** - Painel de controle
+24. **Sistema de notificações** - Alertas via Observer
+25. **Backup automático** - Serviço de backup de dados
+
+>>>>>>> edb44139fc1678797acca79fc165df932d43a4c2
 ## Design Patterns Implementados
 
 ### 🔹 Singleton
