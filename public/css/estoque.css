@@ -1,0 +1,377 @@
+/* Estilos para controle de estoque */
+.produto-estoque {
+    font-size: 0.9em;
+    color: #28a745;
+    font-weight: 500;
+    margin: 5px 0;
+    padding: 3px 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border-left: 3px solid #28a745;
+}
+
+.produto-estoque.estoque-baixo {
+    color: #ffc107;
+    border-left-color: #ffc107;
+    background-color: #fff3cd;
+}
+
+.produto-estoque.esgotado {
+    color: #dc3545;
+    border-left-color: #dc3545;
+    background-color: #f8d7da;
+    font-weight: bold;
+}
+
+.estoque-quantidade {
+    font-weight: bold;
+}
+
+/* Alertas de estoque */
+.alerta-estoque,
+.alerta-esgotado {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    max-width: 300px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease-out;
+}
+
+.alerta-estoque {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+}
+
+.alerta-esgotado {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.alerta-content {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Botão desabilitado */
+.btn-carrinho:disabled {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    cursor: not-allowed !important;
+    opacity: 0.65;
+}
+
+/* Indicador visual de estoque baixo no card */
+.produto-card.estoque-critico {
+    border: 2px solid #ffc107;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+}
+
+.produto-card.esgotado {
+    border: 2px solid #dc3545;
+    opacity: 0.7;
+    position: relative;
+}
+
+.produto-card.esgotado::after {
+    content: "ESGOTADO";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+/* Estilos para página de gerenciamento de estoque */
+.estoque-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.controles-estoque {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.filtros select {
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background: white;
+}
+
+.acoes-gerais {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-verificar, .btn-atualizar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-verificar {
+    background: #ff9800;
+    color: white;
+}
+
+.btn-verificar:hover {
+    background: #f57c00;
+}
+
+.btn-atualizar {
+    background: #2196F3;
+    color: white;
+}
+
+.btn-atualizar:hover {
+    background: #1976D2;
+}
+
+.estatisticas-container {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.estatisticas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.estatistica {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.estatistica .numero {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.estatistica .label {
+    display: block;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.produtos-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.estoque-lista {
+    display: grid;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.produto-estoque {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+    transition: all 0.3s;
+}
+
+.produto-estoque:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.produto-info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.produto-info img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.detalhes h4 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.detalhes .categoria {
+    color: #666;
+    font-size: 0.9em;
+    margin: 0 0 5px 0;
+}
+
+.detalhes .preco {
+    color: #007bff;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.estoque-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.estoque-atual {
+    text-align: center;
+    min-width: 120px;
+}
+
+.estoque-atual .numero {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.estoque-atual .status {
+    display: block;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.acoes-estoque {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.acoes-estoque button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.3s;
+    min-width: 100px;
+}
+
+.btn-adicionar {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-adicionar:hover {
+    background: #45a049;
+}
+
+.btn-remover {
+    background: #f44336;
+    color: white;
+}
+
+.btn-remover:hover {
+    background: #da190b;
+}
+
+.btn-editar {
+    background: #ff9800;
+    color: white;
+}
+
+.btn-editar:hover {
+    background: #f57c00;
+}
+
+.sem-produtos {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.sem-produtos h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .controles-estoque {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .produto-estoque {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .produto-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .produto-info img {
+        margin: 0 0 15px 0;
+    }
+    
+    .estoque-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .acoes-estoque {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .estatisticas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Desejos - DesignFej</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/wishlist.css">
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/search.js"></script>
+</head>
+
+<body>
+  <div class="overlay"></div>
+
+  <header>
+    <div class="top-bar">
+      <button onclick="window.location.href='index.html'" class="icon-btn">🏡 Inicio</button>
+      <div class="search-container">
+        <input type="text" placeholder="O que você procura?">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      <div class="icons">
+        <button onclick="window.location.href='carrinho.html'" class="icon-btn">🛒 Carrinho <span class="cart-count">0</span></button>
+        <button onclick="window.location.href='wishlist.html'" class="icon-btn">💝 Lista de Desejos</button>
+        <button onclick="window.location.href='cupons.html'" class="icon-btn">🎫 Cupons</button>
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <i class="fas fa-heart" id="favorites-icon"></i>
+      </div>
+    </div>
+  </header>
+
+
+
+  <main>
+    <div class="wishlist-container">
+      <div class="wishlist-header">
+        <h1>💝 Minha Lista de Desejos</h1>
+      </div>
+      <div id="wishlist-items"></div>
+    </div>
+  </main>
+
+  <!-- Nova Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="close-sidebar" onclick="toggleSidebar()">&times;</span>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="perfil.html">Perfil do usuário</a></li>
+        <li><a href="avaliacoes.html">Avaliações</a></li>
+        <li class="shop-menu">
+          <div class="shop-header" onclick="toggleShopMenu()">
+            <span>SHOP</span>
+            <span class="shop-icon">+</span>
+          </div>
+          <ul class="shop-submenu" id="shop-submenu">
+            <li><a href="index.html">SHOP TODOS OS PRODUTOS</a></li>
+            <li><a href="brinco.html">BRINCOS</a></li>
+            <li><a href="colares.html">COLARES</a></li>
+            <li><a href="alianca.html">ALIANÇAS</a></li>
+            <li><a href="pingentes.html">PINGENTES</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <footer>
+    <p>DesignFej Joias - Sua joalheria de confiança</p>
+    <p>@designfejjoia</p>
+  </footer>
+
+  <script>
+    // Funções para a sidebar
+    document.addEventListener('DOMContentLoaded', function () {
+      const overlay = document.querySelector('.overlay');
+
+      // Fechar sidebar clicando no overlay
+      overlay.addEventListener('click', function() {
+        closeSidebar();
+      });
+
+      // Inicializar contador do carrinho
+      updateCartCount();
+    });
+
+    // Funções da sidebar
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.querySelector('.overlay');
+      
+      if (sidebar.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.querySelector('.overlay');
+      
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Função para o menu SHOP expansível
+    function toggleShopMenu() {
+      const submenu = document.getElementById('shop-submenu');
+      const icon = document.querySelector('.shop-icon');
+      
+      if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+        icon.textContent = '+';
+      } else {
+        submenu.style.display = 'block';
+        icon.textContent = '-';
+      }
+    }
+
+    // Atualizar contador de itens no carrinho
+    function updateCartCount() {
+      const cartItems = JSON.parse(localStorage.getItem('designfej_cart')) || [];
+      const cartCountElement = document.querySelector('.cart-count');
+      if (cartCountElement) {
+        cartCountElement.textContent = cartItems.length;
+      }
+    }
+        // Carregar itens da wishlist do localStorage
+        function carregarWishlistLocal() {
+            const wishlistItems = JSON.parse(localStorage.getItem('designfej_wishlist')) || [];
+            const container = document.getElementById('wishlist-items');
+            
+            if (wishlistItems.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-wishlist">
+                        <p>💔 Sua lista de desejos está vazia</p>
+                        <p>Adicione produtos à sua wishlist navegando pela loja!</p>
+                        <a href="index.html" class="btn-voltar">Voltar à Loja</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = wishlistItems.map(item => `
+                <div class="wishlist-item">
+                    <img src="${item.image}" alt="${item.name}" onerror="this.src='/img/default.jpg'">
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.details}</p>
+                        <p class="preco">R$ ${parseFloat(item.price).toFixed(2)}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-carrinho" onclick="adicionarAoCarrinho('${item.id}')">Adicionar ao Carrinho</button>
+                        <button onclick="removerDaWishlist('${item.id}')" class="btn-remove">Remover</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Carregar itens da wishlist
+        async function carregarWishlist() {
+            carregarWishlistLocal();
+        }
+        
+        // Mostrar dados do localStorage
+        function mostrarDadosExemplo() {
+            carregarWishlistLocal();
+        }
+        
+
+        
+        // Adicionar produto diretamente ao DOM
+        function adicionarProdutoDOM(produtoId) {
+            const produtos = {
+                1: { nome: 'Brinco de Ouro 18k', preco: 289.90, imagem: 'ChatGPT Image 14 de jul. de 2025, 11_25_07.png', categoria: 'Brincos' },
+                2: { nome: 'Colar de Prata Sterling', preco: 189.90, imagem: 'corrente-laminado-cobra-em-prata-925-esterlina-50cm-60686536ee8df-medium.png', categoria: 'Colares' },
+                3: { nome: 'Anel com Diamante', preco: 459.90, imagem: 'anel-diamante.jpg', categoria: 'Anéis' },
+                4: { nome: 'Pulseira de Ouro', preco: 219.90, imagem: 'shopping (1).webp', categoria: 'Pulseiras' },
+                5: { nome: 'Conjunto Esmeralda', preco: 689.90, imagem: 'il_570xN.3908504094_jlrc.avif', categoria: 'Conjuntos' },
+                6: { nome: 'Aliança de Casamento', preco: 359.90, imagem: 'sg-11134201-7rep2-m8enmdetakdl86.jpg', categoria: 'Alianças' },
+                7: { nome: 'Corrente de Ouro 18k', preco: 459.90, imagem: 'b_colar-de-ouro-18k-veneziana-cora-o-esmeralda-ponto-de-luz-ye7s5dgnzq.webp', categoria: 'Colares' },
+                8: { nome: 'Brinco com Rubi', preco: 389.90, imagem: '12_1_5_530_brinco20rubi20e20diamantes1.webp', categoria: 'Brincos' },
+                9: { nome: 'Pingente Aqua', preco: 159.90, imagem: 'pingente-com-pedra-aqua-azul-para-colar-masculino-639286.jpg', categoria: 'Pingentes' }
+            };
+            
+            const produto = produtos[produtoId];
+            if (!produto) return;
+            
+            const container = document.getElementById('wishlist-items');
+            
+            // Verificar se já existe
+            const existingItems = container.querySelectorAll('.wishlist-item');
+            for (let item of existingItems) {
+                if (item.querySelector('h3').textContent === produto.nome) {
+                    alert('Produto já está na lista de desejos!');
+                    return;
+                }
+            }
+            
+            // Remover mensagem de lista vazia se existir
+            const emptyMessage = container.querySelector('p');
+            if (emptyMessage) {
+                container.innerHTML = '';
+            }
+            
+            // Adicionar novo produto
+            const novoItem = document.createElement('div');
+            novoItem.className = 'wishlist-item';
+            novoItem.innerHTML = `
+                <img src="../img/${produto.imagem}" alt="${produto.nome}" onerror="this.src='../img/default.jpg'">
+                <div class="item-info">
+                    <h3>${produto.nome}</h3>
+                    <p>Categoria: ${produto.categoria}</p>
+                    <p class="preco">R$ ${produto.preco.toFixed(2)}</p>
+                    <p class="data">Adicionado em: ${new Date().toLocaleDateString()}</p>
+                </div>
+                <div class="item-actions">
+                    <button onclick="adicionarAoCarrinho(${produtoId})">Adicionar ao Carrinho</button>
+                    <button onclick="removerDaWishlist(${produtoId})" class="btn-remove">Remover</button>
+                </div>
+            `;
+            
+            container.appendChild(novoItem);
+            alert('Produto adicionado à lista de desejos!');
+        }
+        
+        // Adicionar produto de teste
+        async function adicionarProdutoTeste() {
+            adicionarProdutoDOM('1');
+        }
+
+        // Remover da wishlist
+        function removerDaWishlist(produtoId) {
+            const wishlistItems = JSON.parse(localStorage.getItem('designfej_wishlist')) || [];
+            const updatedItems = wishlistItems.filter(item => item.id !== produtoId);
+            localStorage.setItem('designfej_wishlist', JSON.stringify(updatedItems));
+            alert('Produto removido da lista de desejos!');
+            carregarWishlistLocal();
+        }
+        
+
+
+        // Adicionar ao carrinho
+        function adicionarAoCarrinho(produtoId) {
+            const wishlistItems = JSON.parse(localStorage.getItem('designfej_wishlist')) || [];
+            const produto = wishlistItems.find(item => item.id === produtoId);
+            
+            if (!produto) {
+                alert('Produto não encontrado!');
+                return;
+            }
+            
+            // Recuperar carrinho atual ou inicializar vazio
+            const cartItems = JSON.parse(localStorage.getItem('designfej_cart')) || [];
+            
+            // Verificar se o produto já está no carrinho
+            const existingItemIndex = cartItems.findIndex(item => item.id === produtoId);
+            
+            if (existingItemIndex >= 0) {
+                // Se já existe, aumentar a quantidade
+                cartItems[existingItemIndex].quantity += 1;
+            } else {
+                // Se não existe, adicionar novo item
+                cartItems.push({
+                    id: produto.id,
+                    name: produto.name,
+                    price: produto.price,
+                    image: produto.image,
+                    details: produto.details,
+                    quantity: 1
+                });
+            }
+            
+            // Salvar no localStorage
+            localStorage.setItem('designfej_cart', JSON.stringify(cartItems));
+            
+            // Feedback para o usuário
+            if (confirm(`${produto.name} adicionado ao carrinho! Deseja ir para o carrinho agora?`)) {
+                window.location.href = 'carrinho.html';
+            }
+        }
+
+        // Carregar wishlist ao abrir a página
+        carregarWishlistLocal();
+  </script>
+
+</body>
+
+</html>

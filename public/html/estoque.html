@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Estoque - DesignFej</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/estoque.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/estoque.js"></script>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <button onclick="window.location.href='index.html'" class="icon-btn">🏡 Inicio</button>
+            <h2>Gerenciamento de Estoque</h2>
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        </div>
+    </header>
+
+    <main class="estoque-container">
+        <div class="controles-estoque">
+            <div class="filtros">
+                <select onchange="estoqueController.filtrarPorCategoria(this.value)" class="filtro-categoria">
+                    <option value="todos">Todas as Categorias</option>
+                    <option value="brincos">Brincos</option>
+                    <option value="colares">Colares</option>
+                    <option value="anéis">Anéis</option>
+                    <option value="pulseiras">Pulseiras</option>
+                    <option value="alianças">Alianças</option>
+                    <option value="pingentes">Pingentes</option>
+                </select>
+            </div>
+            
+            <div class="acoes-gerais">
+                <button onclick="estoqueController.verificarEstoqueBaixo()" class="btn-verificar">⚠️ Verificar Estoque Baixo</button>
+                <button onclick="estoqueController.carregarEstoque()" class="btn-atualizar">🔄 Atualizar</button>
+            </div>
+        </div>
+
+        <div class="estatisticas-container">
+            <h3>📊 Estatísticas do Estoque</h3>
+            <div id="estatisticas-estoque" class="estatisticas">
+                <!-- Estatísticas serão carregadas aqui -->
+            </div>
+        </div>
+        
+        <div class="produtos-container">
+            <h3>📦 Produtos em Estoque</h3>
+            <div id="estoque-lista" class="estoque-lista">
+                <!-- Produtos serão carregados aqui -->
+            </div>
+        </div>
+        
+        <div id="sem-produtos" class="sem-produtos" style="display: none;">
+            <h3>📦 Nenhum produto encontrado</h3>
+            <p>Não há produtos cadastrados no sistema.</p>
+        </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="close-sidebar" onclick="toggleSidebar()">&times;</span>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="perfil.html">Perfil do usuário</a></li>
+                <li><a href="meusPedidos.html">Meus Pedidos</a></li>
+                <li><a href="avaliacoes.html">Avaliações</a></li>
+                <li><a href="estoque.html">Gerenciar Estoque</a></li>
+                <li class="shop-menu">
+                    <div class="shop-header" onclick="toggleShopMenu()">
+                        <span>SHOP</span>
+                        <span class="shop-icon">+</span>
+                    </div>
+                    <ul class="shop-submenu" id="shop-submenu">
+                        <li><a href="index.html">SHOP TODOS OS PRODUTOS</a></li>
+                        <li><a href="brinco.html">BRINCOS</a></li>
+                        <li><a href="colares.html">COLARES</a></li>
+                        <li><a href="alianca.html">ALIANÇAS</a></li>
+                        <li><a href="pingentes.html">PINGENTES</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <footer>
+        <p>DesignFej Joias - Sua joalheria de confiança</p>
+        <p>@designfejjoia</p>
+    </footer>
+
+    <script>
+        function toggleShopMenu() {
+            const submenu = document.getElementById('shop-submenu');
+            const icon = document.querySelector('.shop-icon');
+            
+            if (submenu.style.display === 'block') {
+                submenu.style.display = 'none';
+                icon.textContent = '+';
+            } else {
+                submenu.style.display = 'block';
+                icon.textContent = '-';
+            }
+        }
+    </script>
+</body>
+</html>

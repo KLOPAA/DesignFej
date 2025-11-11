@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Pedidos - DesignFej</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/meusPedidos.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <script src="/js/meusPedidos.js"></script>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <button onclick="window.location.href='index.html'" class="icon-btn">🏡 Inicio</button>
+            <h2>Meus Pedidos</h2>
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        </div>
+    </header>
+
+    <main class="pedidos-container">
+        <div class="controles-pedidos">
+            <button onclick="meusPedidosController.simularAtualizacao()" class="btn-simular">🔄 Simular Atualização de Status</button>
+            <button onclick="meusPedidosController.limparTodosPedidos()" class="btn-limpar">🗑️ Limpar Todos os Pedidos</button>
+        </div>
+        
+        <div id="pedidos-lista">
+            <!-- Pedidos serão carregados aqui -->
+        </div>
+        
+        <div id="sem-pedidos" class="sem-pedidos" style="display: none;">
+            <h3>📦 Nenhum pedido encontrado</h3>
+            <p>Você ainda não fez nenhum pedido.</p>
+            <button onclick="window.location.href='index.html'" class="btn-comprar">Começar a Comprar</button>
+        </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="close-sidebar" onclick="toggleSidebar()">&times;</span>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="perfil.html">Perfil do usuário</a></li>
+                <li><a href="meusPedidos.html">Meus Pedidos</a></li>
+                <li><a href="avaliacoes.html">Avaliações</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
